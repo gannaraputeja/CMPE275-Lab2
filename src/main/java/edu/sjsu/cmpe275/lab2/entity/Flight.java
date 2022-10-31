@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This is Passenger Entity.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ */
+
 @Data
 @Entity
 public class Flight {

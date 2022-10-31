@@ -3,6 +3,11 @@ package edu.sjsu.cmpe275.lab2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * This is Passenger Entity.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ */
+
 @SpringBootApplication
 public class Application {
 

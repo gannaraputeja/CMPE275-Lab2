@@ -1,6 +1,8 @@
 package edu.sjsu.cmpe275.lab2.repository;
 
-import edu.sjsu.cmpe275.lab2.entity.Passenger;
+
+import edu.sjsu.cmpe275.lab2.entity.Flight;
+import edu.sjsu.cmpe275.lab2.entity.FlightId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,7 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
-public interface PassengerRepository extends JpaRepository<Passenger, String> {
+public interface FlightRepository extends JpaRepository<Flight, FlightId> {
 
-    Passenger findByPhone(String phone);
 }

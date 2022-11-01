@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * This is Passenger Entity.
- * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
 @SpringBootTest

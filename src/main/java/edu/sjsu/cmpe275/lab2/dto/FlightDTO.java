@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * This is Passenger Entity.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
+ */
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data @NoArgsConstructor
 public class FlightDTO implements Serializable {

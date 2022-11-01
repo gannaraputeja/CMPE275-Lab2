@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * This is Passenger Entity.
- * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
 @Data @NoArgsConstructor

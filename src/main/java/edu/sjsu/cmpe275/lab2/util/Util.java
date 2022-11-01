@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
+/**
+ * This is Passenger Entity.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
+ */
+
+
 public class Util {
 
 

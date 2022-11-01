@@ -6,7 +6,7 @@ create table if not exists Passenger(
 	lastname varchar(255),
 	birthyear int,
 	gender varchar(255),
-	phone varchar(255)
+	phone varchar(255) unique
 );
 
 create table if not exists Reservation(

@@ -6,7 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ReservationRepository extends JpaRepository<Reservation,String> {
+/**
+ * This is Passenger Entity.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
+ */
+
+public interface ReservationRepository extends JpaRepository<Reservation, String> {
 
     List<Reservation> findByPassenger(Passenger passenger);
 }

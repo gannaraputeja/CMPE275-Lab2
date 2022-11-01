@@ -11,14 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
 
 /**
  * This is Passenger Entity.
- * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
 @Service

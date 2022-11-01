@@ -14,7 +14,7 @@ import java.lang.annotation.Repeatable;
 
 /**
  * This is Passenger Entity.
- * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
 @Transactional

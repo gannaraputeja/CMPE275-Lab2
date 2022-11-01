@@ -44,4 +44,4 @@ docker/
 
 
 ###Application Properties####
-src/main/resources/application.properties
+*.properties

@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * This is Passenger Entity.
- * @author Raviteja Gannarapu, Sarat Kumar Kaniti
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
 @SpringBootApplication

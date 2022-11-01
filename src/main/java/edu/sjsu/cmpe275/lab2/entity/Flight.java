@@ -24,7 +24,7 @@ public class Flight {
     */
     private Date departureTime; // Must be within the same calendar day as departureDate.   
     private Date arrivalTime;
-    private int price;    // Full form only
+    private Integer price;    // Full form only
     private String origin;
     private String destination;  
     private int seatsLeft; 

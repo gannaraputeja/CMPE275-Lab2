@@ -2,6 +2,7 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 //import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.List;
 @Entity
 public class Reservation {
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "reservation_number")
     private String reservationNumber; // primary key
     @ManyToOne()
@@ -24,7 +26,7 @@ public class Reservation {
     private Passenger passenger;     // Full form only
     private String origin;
     private String destination;  
-    private int price; // sum of each flight’s price.   // Full form only
+    private Integer price; // sum of each flight’s price.   // Full form only
     @ManyToMany()
     @JoinTable(
             name = "Reservation_Flight",

@@ -3,6 +3,7 @@ package edu.sjsu.cmpe275.lab2.controller;
 import edu.sjsu.cmpe275.lab2.dto.PassengerDTO;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.service.PassengerService;
+import edu.sjsu.cmpe275.lab2.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,8 @@ public class PassengerController {
     public ResponseEntity<?> getPassenger(@PathVariable("id") String id, @RequestParam(value = "xml", required = false) Boolean responseType) {
 
         Passenger passenger = passengerService.getPassenger(id);
-        ResponseEntity<PassengerDTO> responseEntity = prepareResponse(convertToDTO(passenger), HttpStatus.OK, responseType);
+
+        ResponseEntity<PassengerDTO> responseEntity = prepareResponse(Util.convertToDTO(passenger), HttpStatus.OK, responseType);
         //System.out.println(responseEntity);
         return responseEntity;
     }
@@ -40,7 +42,7 @@ public class PassengerController {
         @RequestParam(value = "xml", required = false) Boolean responseType) {
 
         Passenger passenger = passengerService.createPassenger(firstname, lastname, birthyear, gender, phone);
-        ResponseEntity<PassengerDTO> responseEntity = prepareResponse(convertToDTO(passenger), HttpStatus.OK, responseType);
+        ResponseEntity<PassengerDTO> responseEntity = prepareResponse(Util.convertToDTO(passenger), HttpStatus.OK, responseType);
         return responseEntity;
     }
 
@@ -54,18 +56,6 @@ public class PassengerController {
             responseHeaders.setContentType(MediaType.APPLICATION_JSON);
             return new ResponseEntity(response, responseHeaders, status);
         }
-    }
-
-    private PassengerDTO convertToDTO(Passenger passenger) {
-        PassengerDTO dto = new PassengerDTO();
-        dto.setId(passenger.getId());
-        dto.setFirstname(passenger.getFirstname());
-        dto.setLastname(passenger.getLastname());
-        dto.setBirthyear(passenger.getBirthyear());
-        dto.setGender(passenger.getGender());
-        dto.setPhone(passenger.getPhone());
-        dto.setReservations(passenger.getReservations());
-        return dto;
     }
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Plane { // Embedded
     private String model;
-    private int capacity;
+    private Integer capacity;
     private String manufacturer;
-    private int yearOfManufacture;
+    private Integer yearOfManufacture;
 }

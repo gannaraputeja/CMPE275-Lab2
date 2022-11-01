@@ -19,6 +19,6 @@ public class PassengerDTO implements Serializable {
     private Integer birthyear;
     private String gender;
     private String phone;
-    private List<Reservation> reservations;
+    private List<ReservationDTO> reservations;
 
 }

@@ -47,15 +47,13 @@ public class PassengerController {
     }
 
     public ResponseEntity prepareResponse(Object response, HttpStatus status, Boolean responseType) {
+        HttpHeaders responseHeaders = new HttpHeaders();
         if(responseType != null && responseType) {
-            HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.setContentType(MediaType.APPLICATION_XML);
-            return new ResponseEntity(response, responseHeaders, status);
         } else {
-            HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.setContentType(MediaType.APPLICATION_JSON);
-            return new ResponseEntity(response, responseHeaders, status);
         }
+        return new ResponseEntity(response, responseHeaders, status);
     }
 
 }

@@ -1,6 +1,5 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
-//import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,7 +11,6 @@ import java.util.List;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti
  */
 
-//@XStreamAlias("Reservation")
 @Data
 @Entity
 public class Reservation {

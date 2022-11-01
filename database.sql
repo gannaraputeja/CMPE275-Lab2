@@ -13,7 +13,7 @@ create table if not exists Reservation(
 	reservation_number varchar(255) primary key,
 	passenger_id varchar(255),
 	origin varchar(255),
-	designation varchar(255),
+	destination varchar(255),
 	price int
 );
 

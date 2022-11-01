@@ -1,7 +1,9 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 
+//import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,7 +14,8 @@ import java.util.List;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti
  */
 
-@Data
+//@XStreamAlias("Passenger")
+@Data @NoArgsConstructor
 @Entity
 public class Passenger {
     @Id

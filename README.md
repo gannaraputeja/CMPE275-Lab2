@@ -1,6 +1,6 @@
-# CMPE-275 Lab 2 REst APIs, Persistence, Transactions
+# CMPE-275 Lab 2 REST APIs, Persistence, Transactions
 
-### Steps to Run Application.
+### Steps to Run Application
 - Make sure Java JDK and Gradle are setup.
 - Run following command.
 ```

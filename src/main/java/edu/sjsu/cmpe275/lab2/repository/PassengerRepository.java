@@ -11,4 +11,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface PassengerRepository extends JpaRepository<Passenger, String> {
 
+    Passenger findByPhone(String phone);
 }

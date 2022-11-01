@@ -3,10 +3,6 @@ package edu.sjsu.cmpe275.lab2.service;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 
@@ -28,11 +24,8 @@ public class PassengerService {
 
     public Passenger createPassenger(String firstname, String lastname, Integer birthyear, String gender, String phone) {
         Passenger passenger = new Passenger(firstname, lastname, birthyear, gender, phone);
-        try {
-            passengerRepository.save(passenger);
-        } catch (Exception e) {
-            System.out.println(e.getCause()+" **** "+e.getMessage());
-        }
+        passengerRepository.save(passenger);
+
         return passenger;
     }
 

@@ -20,8 +20,8 @@ create table if not exists Reservation(
 create table if not exists Flight(
 	flight_number varchar(255),
 	departure_date date,
-	departure_time date,
-	arrival_time date,
+	departure_time datetime,
+	arrival_time datetime,
 	price int,
 	origin varchar(255),
 	destination varchar(255),

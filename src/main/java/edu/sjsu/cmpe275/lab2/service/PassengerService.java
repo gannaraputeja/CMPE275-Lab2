@@ -5,6 +5,8 @@ import edu.sjsu.cmpe275.lab2.repository.PassengerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 
 /**
  * This is Passenger Entity.
@@ -17,8 +19,8 @@ public class PassengerService {
     @Autowired
     private PassengerRepository passengerRepository;
 
-    public Passenger getPassenger(String id) {
-        Passenger passenger = passengerRepository.findById(id).orElse(null);
+    public Optional<Passenger> getPassenger(String id) {
+        Optional<Passenger> passenger = passengerRepository.findById(id);
         return passenger;
     }
 

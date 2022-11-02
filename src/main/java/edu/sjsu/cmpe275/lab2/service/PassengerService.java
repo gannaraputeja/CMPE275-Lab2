@@ -31,8 +31,8 @@ public class PassengerService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public Passenger getPassenger(String id) {
-        Passenger passenger = passengerRepository.findById(id).orElse(null);
+    public Optional<Passenger> getPassenger(String id) {
+        Optional<Passenger> passenger = passengerRepository.findById(id);
         return passenger;
     }
 

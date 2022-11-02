@@ -41,3 +41,7 @@ out/
 
 ### Docker ###
 docker/
+
+
+###Application Properties####
+*.properties

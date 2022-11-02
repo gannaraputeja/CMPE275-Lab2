@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class Util {
         return new ResponseEntity(buildError(code, msg), responseHeaders, status);
     }
 
-    public static HashMap<String, HashMap> buildError(String code, String msg) {
+    private static HashMap<String, HashMap> buildError(String code, String msg) {
         HashMap<String, HashMap> json = new HashMap<>();
         HashMap<String, String> badRequest = new HashMap<>();
         badRequest.put("code", code);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.lang.annotation.Repeatable;
 
 /**
  * This is Passenger Entity.
@@ -49,5 +50,23 @@ public class PassengerController {
         return responseEntity;
     }
 
+    @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Object> updatePassenger(
+            @PathVariable("id") String id,
+            @RequestParam("firstname") String firstname,
+            @RequestParam("lastname") String lastname,
+            @RequestParam("birthyear") Integer birthyear,
+            @RequestParam("gender") String gender,
+            @RequestParam("phone") String phone,
+            @RequestParam(value = "xml", required = false) Boolean responseType){
+        return passengerService.updatePassenger(id,firstname,lastname,birthyear,gender,phone,responseType);
+    }
 
+    @DeleteMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<Object> deletePassenger(
+            @PathVariable("id") String id
+    ){
+        ResponseEntity<Object> responseEntity = null;
+        return responseEntity;
+    }
 }

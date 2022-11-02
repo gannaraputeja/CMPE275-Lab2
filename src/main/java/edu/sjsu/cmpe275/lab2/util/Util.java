@@ -1,7 +1,9 @@
 package edu.sjsu.cmpe275.lab2.util;
 
+import edu.sjsu.cmpe275.lab2.dto.FlightDTO;
 import edu.sjsu.cmpe275.lab2.dto.PassengerDTO;
 import edu.sjsu.cmpe275.lab2.dto.ReservationDTO;
+import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.entity.Reservation;
 import org.springframework.http.HttpHeaders;
@@ -52,6 +54,16 @@ public class Util {
         return json;
     }
 
+    public static PassengerDTO convertToDTOSimple(Passenger passenger) {
+        PassengerDTO dto = new PassengerDTO();
+        if(passenger != null) {
+            dto.setId(passenger.getId());
+            dto.setFirstname(passenger.getFirstname());
+            dto.setLastname(passenger.getLastname());
+        }
+        return dto;
+    }
+
     public static PassengerDTO convertToDTO(Passenger passenger) {
         PassengerDTO dto = new PassengerDTO();
         if(passenger != null) {
@@ -75,7 +87,35 @@ public class Util {
             dto.setReservationNumber(reservation.getReservationNumber());
             dto.setOrigin(reservation.getOrigin());
             dto.setDestination(reservation.getDestination());
+        }
+        return dto;
+    }
+
+    public static ReservationDTO convertToDTO(Reservation reservation) {
+        ReservationDTO dto = new ReservationDTO();
+        if(reservation != null) {
+            dto.setReservationNumber(reservation.getReservationNumber());
+            dto.setPassenger(convertToDTOSimple(reservation.getPassenger()));
+            dto.setOrigin(reservation.getOrigin());
+            dto.setDestination(reservation.getDestination());
             dto.setPrice(reservation.getPrice());
+            if(reservation.getFlights() != null) {
+                dto.setFlights(reservation.getFlights().stream().map(flight -> convertToDTOSimple(flight)).collect(Collectors.toList()));
+            }
+        }
+        return dto;
+    }
+
+    public static FlightDTO convertToDTOSimple(Flight flight) {
+        FlightDTO dto = new FlightDTO();
+        if(flight != null) {
+            dto.setFlightNumber(flight.getId().getFlightNumber());
+            dto.setDepartureDate(flight.getId().getDepartureDate());
+            dto.setDepartureTime(flight.getDepartureTime());
+            dto.setArrivalTime(flight.getArrivalTime());
+            dto.setOrigin(flight.getOrigin());
+            dto.setDestination(flight.getDestination());
+            dto.setSeatsLeft(flight.getSeatsLeft());
         }
         return dto;
     }

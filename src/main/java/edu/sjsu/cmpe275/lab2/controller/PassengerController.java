@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 import java.lang.annotation.Repeatable;
 
 /**
@@ -29,11 +30,12 @@ public class PassengerController {
     public ResponseEntity<Object> getPassenger(@PathVariable("id") String id, @RequestParam(value = "xml", required = false) Boolean responseType) {
 
         ResponseEntity<Object> responseEntity;
-        Passenger passenger = passengerService.getPassenger(id);
-        if(passenger != null) {
-            responseEntity = Util.prepareResponse(Util.convertToDTO(passenger), HttpStatus.OK, responseType);
+        Optional<Passenger> passenger = passengerService.getPassenger(id);
+        if(passenger.isPresent()) {
+            responseEntity = Util.prepareResponse(Util.convertToDTO(passenger.get()), HttpStatus.OK, responseType);
         } else {
-            responseEntity = Util.prepareErrorResponse("400", "Passenger not found.", HttpStatus.BAD_REQUEST, responseType);
+            responseEntity = Util.prepareErrorResponse("404", "Sorry, the requested passenger with ID " + id
+                    + " does not exist", HttpStatus.NOT_FOUND, responseType);
         }
         return responseEntity;
     }

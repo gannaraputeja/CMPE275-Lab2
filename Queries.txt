@@ -1,0 +1,13 @@
+1. MakeReservation - rest api do not have flight departure date. how to find flight with just number when flightnumber is
+ only part primary key and it requires departureDate
+2. MakeReservation - What should be the order of the flights in comma separated flightNumbers.
+3. MakeReservation - Should we consider First flight Departure as Origin and Last flight Arrival as Destination.
+A = SJC - LAX
+B = LAX - DFW
+C = DFW - JFK
+4. MakeReservation - Should we ignore a flight if it doesn't exist ? as it only requires 1 flight.
+5.
+
+
+
+

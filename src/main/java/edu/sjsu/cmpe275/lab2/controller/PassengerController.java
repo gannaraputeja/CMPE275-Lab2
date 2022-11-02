@@ -1,17 +1,12 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
-import edu.sjsu.cmpe275.lab2.entity.Passenger;
 import edu.sjsu.cmpe275.lab2.service.PassengerService;
-import edu.sjsu.cmpe275.lab2.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
-import java.lang.annotation.Repeatable;
 
 /**
  * This is Passenger Entity.
@@ -29,15 +24,7 @@ public class PassengerController {
     @GetMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getPassenger(@PathVariable("id") String id, @RequestParam(value = "xml", required = false) Boolean responseType) {
 
-        ResponseEntity<Object> responseEntity;
-        Optional<Passenger> passenger = passengerService.getPassenger(id);
-        if(passenger.isPresent()) {
-            responseEntity = Util.prepareResponse(Util.convertToDTO(passenger.get()), HttpStatus.OK, responseType);
-        } else {
-            responseEntity = Util.prepareErrorResponse("404", "Sorry, the requested passenger with ID " + id
-                    + " does not exist", HttpStatus.NOT_FOUND, responseType);
-        }
-        return responseEntity;
+        return passengerService.getPassenger(id, responseType);
     }
 
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -45,9 +32,7 @@ public class PassengerController {
          @RequestParam("birthyear") Integer birthyear, @RequestParam("gender") String gender, @RequestParam("phone") String phone,
         @RequestParam(value = "xml", required = false) Boolean responseType) {
 
-        Passenger passenger = passengerService.createPassenger(firstname, lastname, birthyear, gender, phone);
-        ResponseEntity<Object> responseEntity = Util.prepareResponse(Util.convertToDTO(passenger), HttpStatus.OK, responseType);
-        return responseEntity;
+        return passengerService.createPassenger(firstname, lastname, birthyear, gender, phone, responseType);
     }
 
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

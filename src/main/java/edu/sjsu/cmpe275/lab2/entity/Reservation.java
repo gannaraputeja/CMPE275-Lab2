@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import java.util.List;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
-@Data
+@Data @NoArgsConstructor
 @Entity
 public class Reservation {
     @Id
@@ -33,5 +34,13 @@ public class Reservation {
                     , @JoinColumn(name = "departure_date", referencedColumnName = "departure_date")}
     )
     private List<Flight> flights;    // Full form only, CANNOT be empty, ordered chronologically by departureTime
+
+    public Reservation(Passenger passenger, String origin, String destination, Integer price, List<Flight> flights) {
+        this.passenger = passenger;
+        this.origin = origin;
+        this.destination = destination;
+        this.price = price;
+        this.flights = flights;
+    }
 
 }

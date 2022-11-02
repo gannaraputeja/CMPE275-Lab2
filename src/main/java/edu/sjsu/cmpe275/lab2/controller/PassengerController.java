@@ -62,9 +62,8 @@ public class PassengerController {
 
     @DeleteMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> deletePassenger(
-            @PathVariable("id") String id
-    ){
-        ResponseEntity<Object> responseEntity = null;
-        return responseEntity;
+            @PathVariable("id") String id,
+            @RequestParam(value = "xml", required = false) Boolean responseType){
+        return passengerService.deletePassenger(id,responseType);
     }
 }

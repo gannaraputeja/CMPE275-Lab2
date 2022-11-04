@@ -2,6 +2,7 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,12 +13,21 @@ import java.util.List;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
-@Data
+@Data @NoArgsConstructor
 @Entity
+@IdClass(FlightId.class)
 public class Flight {
 
-    @EmbeddedId
-    private FlightId id;
+    @Column(name = "flight_number")
+    @Id
+    private String flightNumber; // part of the primary key
+    /*  Date format: yy-mm-dd, do not include hours, minutes, or seconds.
+     ** Example: 2022-03-22
+     **The system only needs to support PST. You can ignore other time zones.
+     */
+    @Id
+    @Column(name = "departure_date")
+    private Date departureDate; //  serve as the primary key together with flightNumber
     /*  Date format: yy-mm-dd-hh, do not include minutes or seconds.
     ** Example: 2017-03-22-19
     */

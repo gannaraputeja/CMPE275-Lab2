@@ -109,8 +109,8 @@ public class Util {
     public static FlightDTO convertToDTOSimple(Flight flight) {
         FlightDTO dto = new FlightDTO();
         if(flight != null) {
-            dto.setFlightNumber(flight.getId().getFlightNumber());
-            dto.setDepartureDate(flight.getId().getDepartureDate());
+            dto.setFlightNumber(flight.getFlightNumber());
+            dto.setDepartureDate(flight.getDepartureDate());
             dto.setDepartureTime(flight.getDepartureTime());
             dto.setArrivalTime(flight.getArrivalTime());
             dto.setOrigin(flight.getOrigin());

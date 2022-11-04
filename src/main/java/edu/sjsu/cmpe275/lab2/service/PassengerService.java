@@ -31,16 +31,23 @@ public class PassengerService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public Optional<Passenger> getPassenger(String id) {
+    public ResponseEntity<Object> getPassenger(String id, Boolean responseType) {
+        ResponseEntity<Object> responseEntity;
         Optional<Passenger> passenger = passengerRepository.findById(id);
-        return passenger;
+        if(passenger.isPresent()) {
+            responseEntity = Util.prepareResponse(Util.convertToDTO(passenger.get()), HttpStatus.OK, responseType);
+        } else {
+            responseEntity = Util.prepareErrorResponse("404", "Sorry, the requested passenger with ID " + id
+                    + " does not exist", HttpStatus.NOT_FOUND, responseType);
+        }
+        return responseEntity;
     }
 
-    public Passenger createPassenger(String firstname, String lastname, Integer birthyear, String gender, String phone) {
+    public ResponseEntity<Object> createPassenger(String firstname, String lastname, Integer birthyear, String gender, String phone, Boolean responseType) {
         Passenger passenger = new Passenger(firstname, lastname, birthyear, gender, phone);
         passengerRepository.save(passenger);
-
-        return passenger;
+        ResponseEntity<Object> responseEntity = Util.prepareResponse(Util.convertToDTO(passenger), HttpStatus.OK, responseType);
+        return responseEntity;
     }
 
     public ResponseEntity<Object> updatePassenger(String id, String firstname, String lastname, Integer birthyear, String gender, String phone, Boolean responseType){

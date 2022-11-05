@@ -4,6 +4,7 @@ package edu.sjsu.cmpe275.lab2.repository;
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -14,5 +15,7 @@ import java.util.Optional;
 public interface FlightRepository extends JpaRepository<Flight, String> {
 
     public Optional<Flight> findByFlightNumber(String flightNumber);
+
+    public Optional<Flight> findByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
 
 }

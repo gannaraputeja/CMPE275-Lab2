@@ -1,10 +1,13 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class Flight {
     /*  Date format: yy-mm-dd-hh, do not include minutes or seconds.
     ** Example: 2017-03-22-19
     */
-    private Date departureTime; // Must be within the same calendar day as departureDate.   
+    private Date departureTime; // Must be within the same calendar day as departureDate.
     private Date arrivalTime;
     private Integer price;    // Full form only
     private String origin;
@@ -49,4 +52,19 @@ public class Flight {
     )
     private List<Passenger> passengers;    // Full form only
 
+
+    public Flight(String flightNumber, Date departureDate, Date departureTime, Date arrivalTime, Integer price,
+                  String origin, String destination, Integer capacity, String description, Plane plane, List<Passenger> passengers) {
+        this.flightNumber = flightNumber;
+        this.departureTime = departureTime;
+        this.departureDate = departureDate;
+        this.arrivalTime = arrivalTime;
+        this.price = price;
+        this.origin = origin;
+        this.destination = destination;
+        this.description = description;
+        this.plane = plane;
+        this.seatsLeft = capacity;
+        this.passengers = passengers;
+    }
 }

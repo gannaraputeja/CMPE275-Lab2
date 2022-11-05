@@ -2,9 +2,11 @@ package edu.sjsu.cmpe275.lab2.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import edu.sjsu.cmpe275.lab2.entity.Plane;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +34,10 @@ public class FlightDTO implements Serializable {
     private Integer capacity;
     private String manufacturer;
     private Integer yearOfManufacture;
+    private Plane plane;
     private List<PassengerDTO> passengers;
 
+    public void setPlane(Plane plane){
+        this.plane = plane;
+    }
 }

@@ -1,6 +1,11 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -9,6 +14,10 @@ import javax.persistence.Embeddable;
  */
 
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 public class Plane { // Embedded
     private String model;
     private Integer capacity;

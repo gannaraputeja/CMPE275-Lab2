@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class FlightService {
                                                        Integer capacity, String model, String manufacturer, Integer yearOfManufacture) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber,departureDate);
         Plane plane = new Plane(model, capacity, manufacturer, yearOfManufacture);
-        if(flight.isPresent()) {
+        if(!flight.isPresent()) {
             try{
                 Flight newFlight = new Flight(flightNumber, departureDate, departureTime, arrivalTime, price,
                         origin, destination, capacity, description, plane, new ArrayList<Passenger>());
@@ -47,10 +48,15 @@ public class FlightService {
             }
         }else{
             try{
-                Flight tempFlight = flightRepository.findByFlightNumber(flightNumber).orElse(null);
-                if(tempFlight!=null && !Objects.equals(tempFlight.getFlightNumber(),flightNumber)){
-                    return Util.prepareErrorResponse("400","Flight with this flight number already exists",HttpStatus.BAD_REQUEST,false);
+                Integer passengersCount = flight.get().getPassengers().size();
+                if(passengersCount > capacity){
+                    return Util.prepareErrorResponse("400","Flight Capacity cannot be lower than the number of active reservations",
+                            HttpStatus.BAD_REQUEST,false);
+                }else {
+                    //Updating the seats left based on updated capacity value.
+                    flight.get().setSeatsLeft(capacity-passengersCount);
                 }
+
                 flight.get().setFlightNumber(flightNumber);
                 flight.get().setDepartureDate(departureDate);
                 flight.get().setPrice(price);

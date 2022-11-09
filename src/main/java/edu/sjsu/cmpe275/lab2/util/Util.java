@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 
 public class Util {
 
+    private static final String dateFormat = "yy-MM-dd";
+    private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
 
     public static ResponseEntity prepareResponse(Object response, HttpStatus status, Boolean responseType) {
         HttpHeaders responseHeaders = new HttpHeaders();
@@ -145,6 +149,10 @@ public class Util {
             }
         }
         return dto;
+    }
+
+    public static Date convertStringToDate(String dateString) throws ParseException {
+        return dateFormatter.parse(dateString);
     }
 
 }

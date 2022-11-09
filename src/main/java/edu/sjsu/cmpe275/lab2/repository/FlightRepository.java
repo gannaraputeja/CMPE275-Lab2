@@ -17,8 +17,6 @@ import java.util.Optional;
 
 public interface FlightRepository extends JpaRepository<Flight, String> {
 
-    public Optional<Flight> findByFlightNumber(String flightNumber);
-
     public Optional<Flight> findByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
 
 //    @Query("SELECT * FROM Flight where (flightNumber, departure_date) IN " +

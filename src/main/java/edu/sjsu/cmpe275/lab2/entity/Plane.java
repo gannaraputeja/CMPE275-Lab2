@@ -1,7 +1,10 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Embeddable;
 
 /**
@@ -9,7 +12,7 @@ import javax.persistence.Embeddable;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
-@Data
+@Data @AllArgsConstructor @NoArgsConstructor
 @Embeddable
 public class Plane { // Embedded
     private String model;

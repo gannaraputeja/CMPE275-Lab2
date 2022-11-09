@@ -92,6 +92,7 @@ public class ReservationService {
                     } else {
                         flights.stream().forEach(flight -> {
                             flight.setSeatsLeft(flight.getSeatsLeft() - 1);
+                            flight.getPassengers().add(passenger.get());
                             flightRepository.save(flight);
                         });
                     }

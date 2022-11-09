@@ -5,6 +5,7 @@ import edu.sjsu.cmpe275.lab2.dto.PassengerDTO;
 import edu.sjsu.cmpe275.lab2.dto.ReservationDTO;
 import edu.sjsu.cmpe275.lab2.entity.Flight;
 import edu.sjsu.cmpe275.lab2.entity.Passenger;
+import edu.sjsu.cmpe275.lab2.entity.Plane;
 import edu.sjsu.cmpe275.lab2.entity.Reservation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -120,6 +121,32 @@ public class Util {
             dto.setOrigin(flight.getOrigin());
             dto.setDestination(flight.getDestination());
             dto.setSeatsLeft(flight.getSeatsLeft());
+        }
+        return dto;
+    }
+
+    public static FlightDTO convertToDTO(Flight flight){
+        FlightDTO dto = new FlightDTO();
+        if(flight!=null){
+            dto.setFlightNumber(flight.getFlightNumber());
+            dto.setDepartureDate(flight.getDepartureDate());
+            dto.setDepartureTime(flight.getDepartureTime());
+            dto.setArrivalTime(flight.getArrivalTime());
+            dto.setOrigin(flight.getOrigin());
+            dto.setDestination(flight.getDestination());
+            dto.setSeatsLeft(flight.getSeatsLeft());
+            dto.setPrice(flight.getPrice());
+            dto.setDescription(flight.getDescription());
+
+            if(flight.getPassengers()!=null){
+                dto.setPassengers(flight.getPassengers().stream().map(passenger -> convertToDTOSimple(passenger)).collect(Collectors.toList()));
+            }
+
+            if(flight.getPlane()!=null){
+                Plane plane = new Plane(flight.getPlane().getModel(),flight.getPlane().getCapacity(),flight.getPlane().getManufacturer(),
+                        flight.getPlane().getYearOfManufacture());
+                dto.setPlane(plane);
+            }
         }
         return dto;
     }

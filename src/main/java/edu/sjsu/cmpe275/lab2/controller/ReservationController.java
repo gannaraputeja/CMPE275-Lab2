@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
+import edu.sjsu.cmpe275.lab2.exception.MyParseException;
 import edu.sjsu.cmpe275.lab2.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -31,8 +32,9 @@ public class ReservationController {
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> makeReservation(@RequestParam("passengerId") String passengerId,
           @RequestParam("flightNumbers") String flightNumbers,
-          @RequestParam(value = "xml", required = false) Boolean responseType) {
-        return reservationService.makeReservation(passengerId, flightNumbers, responseType);
+          @RequestParam("departureDates") String departureDates,
+          @RequestParam(value = "xml", required = false) Boolean responseType) throws MyParseException {
+        return reservationService.makeReservation(passengerId, flightNumbers, departureDates, responseType);
     }
 
 }

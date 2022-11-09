@@ -1,6 +1,7 @@
 package edu.sjsu.cmpe275.lab2.entity;
 
 
+import lombok.Data;
 import javax.persistence.Embeddable;
 
 /**
@@ -8,6 +9,7 @@ import javax.persistence.Embeddable;
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
+@Data
 @Embeddable
 public class Plane { // Embedded
     private String model;

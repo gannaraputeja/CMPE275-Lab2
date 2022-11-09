@@ -54,13 +54,13 @@ public class FlightService {
             }
         } else {
             try {
-                Integer passengersCount = flight.get().getPassengers().size();
-                if (passengersCount > capacity) {
+                Integer totalBookings = flight.get().getPlane().getCapacity() - flight.get().getSeatsLeft();
+                if (totalBookings > capacity) {
                     return Util.prepareErrorResponse("400", "Flight Capacity cannot be lower than the number of active reservations",
                             HttpStatus.BAD_REQUEST, false);
                 } else {
                     //Updating the seats left based on updated capacity value.
-                    flight.get().setSeatsLeft(capacity - passengersCount);
+                    flight.get().setSeatsLeft(capacity - totalBookings);
                 }
 
                 for (Passenger passenger : flight.get().getPassengers()) {

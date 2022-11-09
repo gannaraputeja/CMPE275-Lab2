@@ -33,7 +33,7 @@ public class FlightController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getFlight(
             @PathVariable("flightNumber") String flightNumber,
-            @PathVariable("departureDate") Date departureDate,
+            @PathVariable("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date departureDate,
             @RequestParam(value = "xml", required = false) Boolean responseType ){
         return flightService.getFlight(flightNumber,departureDate,responseType);
     }
@@ -64,7 +64,7 @@ public class FlightController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> deleteFlight(
             @PathVariable("flightNumber") String flightNumber,
-            @PathVariable("departureDate") Date departureDate,
+            @PathVariable("departureDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date departureDate,
             @RequestParam(value = "xml", required = false) Boolean responseType ){
         return flightService.deleteFlight(flightNumber,departureDate,responseType);
     }

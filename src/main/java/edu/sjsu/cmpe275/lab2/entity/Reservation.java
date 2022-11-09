@@ -2,6 +2,7 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Reservation {
     @Column(name = "reservation_number")
     private String reservationNumber; // primary key
     @ManyToOne()
+    @ToString.Exclude
     @JoinColumn(name="passengerId")
     private Passenger passenger;     // Full form only
     private String origin;

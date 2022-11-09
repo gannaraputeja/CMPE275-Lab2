@@ -3,6 +3,7 @@ package edu.sjsu.cmpe275.lab2.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -27,6 +28,7 @@ public class Passenger {
     @Column(unique = true)
     private String phone; // Phone numbers must be unique.   Full form only
     @OneToMany(mappedBy = "passenger")
+    @ToString.Exclude
     private List<Reservation> reservations;   // Full form only
 
     public Passenger(String firstname, String lastname, Integer birthyear, String gender, String phone) {

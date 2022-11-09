@@ -52,6 +52,9 @@ public class Flight {
     )
     private List<Passenger> passengers;    // Full form only
 
+    /*@ManyToMany(mappedBy = "flights")
+    private List<Reservation> reservationList;*/
+
 
     public Flight(String flightNumber, Date departureDate, Date departureTime, Date arrivalTime, Integer price,
                   String origin, String destination, Integer capacity, String description, Plane plane, List<Passenger> passengers) {

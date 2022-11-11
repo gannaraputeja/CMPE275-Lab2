@@ -223,21 +223,21 @@ public class ReservationService {
     }
 
     
-// 	public ResponseEntity<Object> deleteReservationById(String reservationNumber, boolean responseType) 
-// 	{
-//         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
-//         if(reservation.isEmpty()) {
-//             return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
-//         }
-// 		List<Flight> flights = reservation.get().getFlights();
-// 		for(Flight f : flights)
-// 		{
-// 			f.setSeatsLeft(f.getSeatsLeft()+1);
-// 			flightRepository.save(f);
-// 		}
+	public ResponseEntity<Object> deleteReservationById(String reservationNumber, boolean responseType) 
+	{
+        Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
+        if(reservation.isEmpty()) {
+            return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
+        }
+		List<Flight> flights = reservation.get().getFlights();
+		for(Flight f : flights)
+		{
+			f.setSeatsLeft(f.getSeatsLeft()+1);
+			flightRepository.save(f);
+		}
 		
-// 		reservationRepository.deleteById(reservationNumber);
-//         String msg = "Reservation with number "+reservationNumber +" is canceled successfully";
-// 		return Util.prepareResponse(new Success("200","msg"), HttpStatus.OK, responseType);
-// 	}
-// }
+		reservationRepository.deleteById(reservationNumber);
+        String msg = "Reservation with number "+reservationNumber +" is canceled successfully";
+		return Util.prepareResponse(new Success("200","msg"), HttpStatus.OK, responseType);
+	}
+}

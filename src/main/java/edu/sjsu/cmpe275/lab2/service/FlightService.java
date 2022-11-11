@@ -39,10 +39,6 @@ public class FlightService {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
         Plane plane = new Plane(model, capacity, manufacturer, yearOfManufacture);
 
-//        if(departureDate.compareTo(departureTime)!=0){
-//            return Util.prepareErrorResponse("400","Departure Date and Departure Time are not on the same day based on PST", HttpStatus.BAD_REQUEST,false);
-//        }
-
         if (flight.isEmpty()) {
             try {
                 Flight newFlight = new Flight(flightNumber, departureDate, departureTime, arrivalTime, price,
@@ -59,7 +55,6 @@ public class FlightService {
                     return Util.prepareErrorResponse("400", "Flight Capacity cannot be lower than the number of active reservations",
                             HttpStatus.BAD_REQUEST, false);
                 } else {
-                    //Updating the seats left based on updated capacity value.
                     flight.get().setSeatsLeft(capacity - totalBookings);
                 }
 

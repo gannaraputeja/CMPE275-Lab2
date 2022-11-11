@@ -150,4 +150,77 @@ public class ReservationService {
         return flights.stream().allMatch(flight -> flight.getSeatsLeft() > 0 && flight.getSeatsLeft() <= flight.getPlane().getCapacity());
     }
 
+    public ResponseEntity<Object> updateReservation(String reservationNumber, String flightsAdded, String flightsRemoved, String  departureDate, Boolean responseType ) {
+        ResponseEntity<Object> responseEntity;        
+        if(flightsAdded != null && flightsAdded.isEmpty() || flightsRemoved != null && flightsRemoved.isEmpty() ){
+            return Util.prepareErrorResponse("400", "Sorry, flightsAdded or flightsRemoved is Empty.", HttpStatus.BAD_REQUEST, responseType); 
+        }
+        Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
+        if(reservation.isEmpty()) {
+            return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
+        }
+         Reservation reservationObj = reservation.get();
+        List<Flight> flights = reservationObj.getFlights();
+        if(flightsRemoved != null) {
+            List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
+            // Remove Flights
+            flights.removeIf(flight -> flightsToRemove.contains(flight.getFlightNumber()));
+            // Update Removed flights
+            flights.stream().forEach(flight -> {
+                if(flightsToRemove.contains(flight.getFlightNumber())) {
+                    flight.setSeatsLeft(flight.getSeatsLeft() + 1);
+                    flight.getPassengers().remove(reservationObj.getPassenger());
+                    flightRepository.save(flight);
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        // System.out.println(departureDate);
+        // System.out.println(flightsAdded);
+        // System.out.println(flightsRemoved);
+        
+        // List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
+        // List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
+
+        // Reservation r = reservation.get();
+        // List<Flight> flights = r.getFlights();
+        // flights.removeIf(flight -> flight.getFlightNumber().contains(flightsRemoved));
+        // flightRepository.
+        // flightsToAdd.forEach(flightNumber -> {
+        //     flightRepository.findByFlightNumbers()
+        //     flight.setSeatsLeft(flight.getSeatsLeft() - 1);
+        //     flight.getPassengers().add(passenger.get());
+        //     flightRepository.save(flight);
+        // });
+        // System.out.println(r.getFlights().toString());
+        // if(!reservation.isEmpty()) {
+            
+
+        // // }
+        // List<Flight> flights;
+        // List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
+        // List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
+
+        // flightsToAdd.stream().forEach(flightNumber -> {
+        //     Optional<Flight> flight = flightRepository.findByFlightNumber(flightNumber);
+        //     // if(flight.isPresent())
+        //         // flights.add(flight.get());
+        // });
+
+
+        // List<Reservation> reservation = reservationRepository.findAll();
+        responseEntity =  Util.prepareResponse(reservation, HttpStatus.OK, responseType);
+        return responseEntity;
+    }
 }

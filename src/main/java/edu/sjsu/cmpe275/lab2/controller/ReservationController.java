@@ -25,7 +25,6 @@ public class ReservationController {
     @GetMapping(value = "/{reservationNumber}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getReservation(@PathVariable("reservationNumber") String reservationNumber,
              @RequestParam(value = "xml", required = false) Boolean responseType) {
-
         return reservationService.getReservation(reservationNumber, responseType);
     }
 
@@ -37,4 +36,14 @@ public class ReservationController {
         return reservationService.makeReservation(passengerId, flightNumbers, departureDates, responseType);
     }
 
+    @PostMapping(value = "/{number}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
+    public ResponseEntity<Object> UpdateReservation(
+        @PathVariable("number") String reservationNumber,
+        @RequestParam(value = "flightsAdded", required = false) String flightsAdded,
+        @RequestParam(value = "flightsRemoved", required = false) String flightsRemoved,
+        @RequestParam(value = "departureDate", required = false) String departureDate,
+        @RequestParam(value= "xml", required = false) Boolean responseType
+        ) {
+            return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDate, responseType);
+        }
 }

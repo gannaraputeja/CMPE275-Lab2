@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -24,6 +26,7 @@ public class Reservation {
     @ManyToOne()
     @ToString.Exclude
     @JoinColumn(name="passengerId")
+    @JsonIgnoreProperties({"birthyear","gender","phone","reservations"})
     private Passenger passenger;     // Full form only
     private String origin;
     private String destination;  
@@ -35,6 +38,7 @@ public class Reservation {
             inverseJoinColumns = {@JoinColumn(name = "flight_number", referencedColumnName = "flight_number")
                     , @JoinColumn(name = "departure_date", referencedColumnName = "departure_date")}
     )
+    @JsonIgnoreProperties({"passengers"})
     private List<Flight> flights;    // Full form only, CANNOT be empty, ordered chronologically by departureTime
 
     public Reservation(Passenger passenger, String origin, String destination, Integer price, List<Flight> flights) {
@@ -43,6 +47,9 @@ public class Reservation {
         this.destination = destination;
         this.price = price;
         this.flights = flights;
+    }
+    public int getPriceNew(){
+        return this.price;
     }
 
 }

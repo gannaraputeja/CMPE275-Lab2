@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +52,7 @@ public class Flight {
                     , @JoinColumn(name = "departure_date", referencedColumnName = "departure_date")},
             inverseJoinColumns = {@JoinColumn(name = "passenger_id", referencedColumnName = "id")}
     )
+    @JsonIgnore
     private List<Passenger> passengers;    // Full form only
 
     /*@ManyToMany(mappedBy = "flights")

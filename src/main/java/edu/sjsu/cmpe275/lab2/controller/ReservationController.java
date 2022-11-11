@@ -46,4 +46,15 @@ public class ReservationController {
         ) {
             return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDate, responseType);
         }
+
+        @DeleteMapping(value = "/{number}",
+        consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+        produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+        public ResponseEntity<Object> deleteReservationById(
+                @PathVariable(value="number") String reservationNumber,
+                @RequestParam(value = "xml") boolean responseType)
+        {
+            return reservationService.deleteReservationById(reservationNumber, responseType);
+        }
+
 }

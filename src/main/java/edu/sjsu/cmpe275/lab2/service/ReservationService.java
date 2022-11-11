@@ -208,66 +208,36 @@ public class ReservationService {
             if(!hasSeatsLeft(flights) || hasOverlapConflict(flights) || hasOverlapReservation(reservationObj.getPassenger(), flights)) {
                 return Util.prepareErrorResponse("400", "Sorry, the new flights has the conflict in either capacity or overlap or same reservation ", HttpStatus.NOT_FOUND, responseType);
             }
-
-            String origin = flights.get(0).getOrigin();
-            String destination = flights.get(flights.size()-1).getDestination();
-            Integer price = flights.stream().map(flight -> flight.getPrice()).reduce(0, (a,b) -> a+b);
-
-            reservationObj.setFlights(flights);
-            reservationObj.setOrigin(origin);
-            reservationObj.setDestination(destination);
-            reservationObj.setPrice(price);
-            reservationRepository.save(reservationObj);
-            return Util.prepareResponse(Util.convertToDTO(reservationObj), HttpStatus.OK, responseType);
         }
 
+        String origin = flights.get(0).getOrigin();
+        String destination = flights.get(flights.size()-1).getDestination();
+        Integer price = flights.stream().map(flight -> flight.getPrice()).reduce(0, (a,b) -> a+b);
 
-
-
-
-
-
-
-
-
-
-
-
-        // System.out.println(departureDate);
-        // System.out.println(flightsAdded);
-        // System.out.println(flightsRemoved);
-        
-        // List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
-        // List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
-
-        // Reservation r = reservation.get();
-        // List<Flight> flights = r.getFlights();
-        // flights.removeIf(flight -> flight.getFlightNumber().contains(flightsRemoved));
-        // flightRepository.
-        // flightsToAdd.forEach(flightNumber -> {
-        //     flightRepository.findByFlightNumbers()
-        //     flight.setSeatsLeft(flight.getSeatsLeft() - 1);
-        //     flight.getPassengers().add(passenger.get());
-        //     flightRepository.save(flight);
-        // });
-        // System.out.println(r.getFlights().toString());
-        // if(!reservation.isEmpty()) {
-            
-
-        // // }
-        // List<Flight> flights;
-        // List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
-        // List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
-
-        // flightsToAdd.stream().forEach(flightNumber -> {
-        //     Optional<Flight> flight = flightRepository.findByFlightNumber(flightNumber);
-        //     // if(flight.isPresent())
-        //         // flights.add(flight.get());
-        // });
-
-
-        // List<Reservation> reservation = reservationRepository.findAll();
-        responseEntity =  Util.prepareResponse(reservation, HttpStatus.OK, responseType);
-        return responseEntity;
+        reservationObj.setFlights(flights);
+        reservationObj.setOrigin(origin);
+        reservationObj.setDestination(destination);
+        reservationObj.setPrice(price);
+        reservationRepository.save(reservationObj);
+        return Util.prepareResponse(Util.convertToDTO(reservationObj), HttpStatus.OK, responseType);
     }
-}
+
+    
+// 	public ResponseEntity<Object> deleteReservationById(String reservationNumber, boolean responseType) 
+// 	{
+//         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
+//         if(reservation.isEmpty()) {
+//             return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
+//         }
+// 		List<Flight> flights = reservation.get().getFlights();
+// 		for(Flight f : flights)
+// 		{
+// 			f.setSeatsLeft(f.getSeatsLeft()+1);
+// 			flightRepository.save(f);
+// 		}
+		
+// 		reservationRepository.deleteById(reservationNumber);
+//         String msg = "Reservation with number "+reservationNumber +" is canceled successfully";
+// 		return Util.prepareResponse(new Success("200","msg"), HttpStatus.OK, responseType);
+// 	}
+// }

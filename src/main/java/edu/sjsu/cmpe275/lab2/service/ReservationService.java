@@ -150,16 +150,27 @@ public class ReservationService {
         return flights.stream().allMatch(flight -> flight.getSeatsLeft() > 0 && flight.getSeatsLeft() <= flight.getPlane().getCapacity());
     }
 
+    public List<Date> convertStingDatesToDate(List<String> departureDatesStringList){
+        List<Date> departureDatesList = departureDatesStringList.stream().map(d -> {
+            try {
+                return Util.convertStringToDate(d);
+            } catch (ParseException e) {
+                throw new MyParseException(e);
+            }
+        }).collect(Collectors.toList());
+        return departureDatesList;
+    }
+
     public ResponseEntity<Object> updateReservation(String reservationNumber, String flightsAdded, String flightsRemoved, String  departureDate, Boolean responseType ) {
         ResponseEntity<Object> responseEntity;        
-        if(flightsAdded != null && flightsAdded.isEmpty() || flightsRemoved != null && flightsRemoved.isEmpty() ){
+        if(flightsAdded != null && flightsAdded.isEmpty() && departureDate !=null && departureDate.isEmpty() || flightsRemoved != null && flightsRemoved.isEmpty() ){
             return Util.prepareErrorResponse("400", "Sorry, flightsAdded or flightsRemoved is Empty.", HttpStatus.BAD_REQUEST, responseType); 
         }
         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
         if(reservation.isEmpty()) {
             return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
         }
-         Reservation reservationObj = reservation.get();
+        Reservation reservationObj = reservation.get();
         List<Flight> flights = reservationObj.getFlights();
         if(flightsRemoved != null) {
             List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
@@ -174,6 +185,42 @@ public class ReservationService {
                 }
             });
         }
+
+        if(flightsAdded != null && departureDate != null) {
+            List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
+            List<String> departureDatesStringList = Arrays.stream(departureDate.split(",")).collect(Collectors.toList());
+            int nFlightsToAdd = flightsToAdd.size(); 
+            if( nFlightsToAdd != departureDatesStringList.size()) {
+                return Util.prepareErrorResponse("400", "Parameters count do not match. No. of FlightNumbers: " + flightsToAdd.size() + ", No. of DepartureDates: " + departureDatesStringList.size(), HttpStatus.BAD_REQUEST, responseType);
+            }
+
+            List<Date> departureDatesList = convertStingDatesToDate(departureDatesStringList);
+
+            for(int i=0; i < flightsToAdd.size(); i++) {
+                Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightsToAdd.get(i), departureDatesList.get(i));
+                if(flight.isPresent()) {
+                    flights.add(flight.get());
+                } else {
+                    return Util.prepareErrorResponse("404", "Sorry, the flight with number " + flightsToAdd.get(i) + " does not exist", HttpStatus.NOT_FOUND, responseType);
+                }
+            };
+
+            if(!hasSeatsLeft(flights) || hasOverlapConflict(flights) || hasOverlapReservation(reservationObj.getPassenger(), flights)) {
+                return Util.prepareErrorResponse("400", "Sorry, the new flights has the conflict in either capacity or overlap or same reservation ", HttpStatus.NOT_FOUND, responseType);
+            }
+
+            String origin = flights.get(0).getOrigin();
+            String destination = flights.get(flights.size()-1).getDestination();
+            Integer price = flights.stream().map(flight -> flight.getPrice()).reduce(0, (a,b) -> a+b);
+
+            reservationObj.setFlights(flights);
+            reservationObj.setOrigin(origin);
+            reservationObj.setDestination(destination);
+            reservationObj.setPrice(price);
+            reservationRepository.save(reservationObj);
+            return Util.prepareResponse(Util.convertToDTO(reservationObj), HttpStatus.OK, responseType);
+        }
+
 
 
 

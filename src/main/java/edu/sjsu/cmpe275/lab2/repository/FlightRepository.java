@@ -19,6 +19,8 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
 
     public Optional<Flight> findByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
 
+    public void deleteByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
+
 //    @Query("SELECT * FROM Flight where (flightNumber, departure_date) IN " +
 //            "   (SELECT flight_number,departure_date FROM Reservation_Flight WHERE reservation_number = ?1 )")
 //    public List<Flight> findBy(String reservationNumber);

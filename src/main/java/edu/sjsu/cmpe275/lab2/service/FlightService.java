@@ -89,7 +89,14 @@ public class FlightService {
                     HttpStatus.NOT_FOUND, responseType);
         }
 
-        return null;
+        if(flight.get().getPassengers().size()>0)
+		{
+            return Util.prepareErrorResponse("404", "The Flight Number"+ flightNumber +" cannot be deleted since it has ome or more reservations",
+            HttpStatus.NOT_FOUND, responseType);        
+        }
+        		
+		flightRepository.deleteByFlightNumberAndDepartureDate(flightNumber,departureDate);
+        return Util.prepareResponse(new Success("200",msg), HttpStatus.OK, responseType);
     }
 
     private Boolean checkFlightTimeConflict(Passenger passenger, Date departureTime, Date arrivalTime) {

@@ -85,7 +85,7 @@ public class FlightService {
 
     public ResponseEntity<Object> deleteFlight(String flightNumber, Date departureDate, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
-        if (flight.isPresent()) {
+        if (!flight.isPresent()) {
             return Util.prepareErrorResponse("404", "Flight with the given flight number and departure date does not exists",
                     HttpStatus.NOT_FOUND, responseType);
         }

@@ -96,7 +96,7 @@ public class FlightService {
         }
         		
 		flightRepository.deleteByFlightNumberAndDepartureDate(flightNumber,departureDate);
-        return Util.prepareResponse(new Success("200",msg), HttpStatus.OK, responseType);
+        return Util.prepareResponse(new Success("200","Deleted flight successfully"), HttpStatus.OK, responseType);
     }
 
     private Boolean checkFlightTimeConflict(Passenger passenger, Date departureTime, Date arrivalTime) {

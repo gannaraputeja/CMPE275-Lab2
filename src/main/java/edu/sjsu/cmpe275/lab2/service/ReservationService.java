@@ -161,19 +161,19 @@ public class ReservationService {
         return departureDatesList;
     }
 
-    public ResponseEntity<Object> updateReservation(String reservationNumber, String flightsAdded, String flightsRemoved, String  departureDate, Boolean responseType ) {
+    public ResponseEntity<Object> updateReservation(String reservationNumber, String fltAdd, String fltRm, String dda, String ddr, Boolean responseType ) {
         ResponseEntity<Object> responseEntity;        
-        if(flightsAdded != null && flightsAdded.isEmpty() && departureDate !=null && departureDate.isEmpty() || flightsRemoved != null && flightsRemoved.isEmpty() ){
+        if(fltAdd != null && fltAdd.isEmpty() && dda !=null && dda.isEmpty() || fltRm != null && fltRm.isEmpty() ){
             return Util.prepareErrorResponse("400", "Sorry, flightsAdded or flightsRemoved is Empty.", HttpStatus.BAD_REQUEST, responseType); 
         }
         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
-        if(reservation.isEmpty()) {
+        if(!reservation.isPresent()) {
             return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
         }
         Reservation reservationObj = reservation.get();
         List<Flight> flights = reservationObj.getFlights();
-        if(flightsRemoved != null) {
-            List<String> flightsToRemove = Arrays.stream(flightsRemoved.split(",")).collect(Collectors.toList());
+        if(fltRm != null) {
+            List<String> flightsToRemove = Arrays.stream(fltRm.split(",")).collect(Collectors.toList());
             // Remove Flights
             flights.removeIf(flight -> flightsToRemove.contains(flight.getFlightNumber()));
             // Update Removed flights
@@ -186,18 +186,18 @@ public class ReservationService {
             });
         }
 
-        if(flightsAdded != null && departureDate != null) {
-            List<String> flightsToAdd    = Arrays.stream(flightsAdded.split(",")).collect(Collectors.toList());
-            List<String> departureDatesStringList = Arrays.stream(departureDate.split(",")).collect(Collectors.toList());
+        if(fltAdd != null && dda != null) {
+            List<String> flightsToAdd    = Arrays.stream(fltAdd.split(",")).collect(Collectors.toList());
+            List<String> ddaStrList = Arrays.stream(dda.split(",")).collect(Collectors.toList());
             int nFlightsToAdd = flightsToAdd.size(); 
-            if( nFlightsToAdd != departureDatesStringList.size()) {
-                return Util.prepareErrorResponse("400", "Parameters count do not match. No. of FlightNumbers: " + flightsToAdd.size() + ", No. of DepartureDates: " + departureDatesStringList.size(), HttpStatus.BAD_REQUEST, responseType);
+            if( nFlightsToAdd != ddaStrList.size()) {
+                return Util.prepareErrorResponse("400", "Parameters count do not match. No. of FlightNumbers: " + flightsToAdd.size() + ", No. of DepartureDates: " + ddaStrList.size(), HttpStatus.BAD_REQUEST, responseType);
             }
 
-            List<Date> departureDatesList = convertStingDatesToDate(departureDatesStringList);
+            List<Date> ddaList = convertStingDatesToDate(ddaStrList);
 
             for(int i=0; i < flightsToAdd.size(); i++) {
-                Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightsToAdd.get(i), departureDatesList.get(i));
+                Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightsToAdd.get(i), ddaList.get(i));
                 if(flight.isPresent()) {
                     flights.add(flight.get());
                 } else {
@@ -226,7 +226,7 @@ public class ReservationService {
 	public ResponseEntity<Object> deleteReservationById(String reservationNumber, boolean responseType) 
 	{
         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
-        if(reservation.isEmpty()) {
+        if(!reservation.isPresent()) {
             return Util.prepareErrorResponse("400", "Sorry, reservation number does not exist.", HttpStatus.BAD_REQUEST, responseType); 
         }
 		List<Flight> flights = reservation.get().getFlights();

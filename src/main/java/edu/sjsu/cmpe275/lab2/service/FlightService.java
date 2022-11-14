@@ -25,7 +25,7 @@ public class FlightService {
 
     public ResponseEntity<Object> getFlight(String flightNumber, Date departureDate, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
-        if (flight.isEmpty()) {
+        if (!flight.isPresent()) {
             String code = "Sorry, the requested flight with number " + flightNumber + " does not exist";
             return Util.prepareErrorResponse("404", code, HttpStatus.NOT_FOUND, responseType);
         }
@@ -39,7 +39,7 @@ public class FlightService {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
         Plane plane = new Plane(model, capacity, manufacturer, yearOfManufacture);
 
-        if (flight.isEmpty()) {
+        if (!flight.isPresent()) {
             try {
                 Flight newFlight = new Flight(flightNumber, departureDate, departureTime, arrivalTime, price,
                         origin, destination, capacity, description, plane, new ArrayList<>());
@@ -77,6 +77,7 @@ public class FlightService {
                 flightRepository.save(flight.get());
                 return Util.prepareResponse(Util.convertToDTO(flight.get()), HttpStatus.OK, false);
             } catch (Exception e) {
+                System.out.println(e.toString());
                 return Util.prepareErrorResponse("400", "Exception while updating the flight details", HttpStatus.BAD_REQUEST, false);
             }
         }
@@ -84,7 +85,7 @@ public class FlightService {
 
     public ResponseEntity<Object> deleteFlight(String flightNumber, Date departureDate, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
-        if (flight.isEmpty()) {
+        if (flight.isPresent()) {
             return Util.prepareErrorResponse("404", "Flight with the given flight number and departure date does not exists",
                     HttpStatus.NOT_FOUND, responseType);
         }

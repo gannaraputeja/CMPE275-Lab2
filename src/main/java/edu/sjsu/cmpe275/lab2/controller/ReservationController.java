@@ -41,10 +41,11 @@ public class ReservationController {
         @PathVariable("number") String reservationNumber,
         @RequestParam(value = "flightsAdded", required = false) String flightsAdded,
         @RequestParam(value = "flightsRemoved", required = false) String flightsRemoved,
-        @RequestParam(value = "departureDate", required = false) String departureDate,
+        @RequestParam(value = "departureDatesAdded", required = false) String departureDatesAdded,
+        @RequestParam(value = "departureDatesRemoved", required = false) String departureDatesRemoved,
         @RequestParam(value= "xml", required = false) Boolean responseType
         ) {
-            return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDate, responseType);
+            return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDatesAdded, departureDatesRemoved, responseType);
         }
 
         @DeleteMapping(value = "/{number}",

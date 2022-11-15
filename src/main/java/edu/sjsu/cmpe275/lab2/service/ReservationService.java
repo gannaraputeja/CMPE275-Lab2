@@ -575,6 +575,7 @@ public class ReservationService {
 		for(Flight f : flights)
 		{
 			f.setSeatsLeft(f.getSeatsLeft()+1);
+            f.getPassengers().remove(reservation.get().getPassenger());
 			flightRepository.save(f);
 		}
 		

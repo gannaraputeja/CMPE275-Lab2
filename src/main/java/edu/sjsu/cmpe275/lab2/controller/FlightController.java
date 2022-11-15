@@ -1,7 +1,6 @@
 package edu.sjsu.cmpe275.lab2.controller;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import edu.sjsu.cmpe275.lab2.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,10 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
-import java.lang.annotation.Repeatable;
 import java.util.Date;
 
 /**
@@ -28,6 +24,13 @@ public class FlightController {
     @Autowired
     private FlightService flightService;
 
+    /**
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param responseType
+     * @return
+     */
     @GetMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -38,6 +41,22 @@ public class FlightController {
         return flightService.getFlight(flightNumber,departureDate,responseType);
     }
 
+    /**
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param price
+     * @param origin
+     * @param destination
+     * @param departureTime
+     * @param arrivalTime
+     * @param description
+     * @param capacity
+     * @param model
+     * @param manufacturer
+     * @param yearOfManufacture
+     * @return
+     */
     @PostMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -59,6 +78,13 @@ public class FlightController {
                 departureTime,arrivalTime,description,capacity,model,manufacturer,yearOfManufacture);
     }
 
+    /**
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param responseType
+     * @return
+     */
     @DeleteMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

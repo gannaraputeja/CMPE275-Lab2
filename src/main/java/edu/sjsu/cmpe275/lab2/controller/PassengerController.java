@@ -21,12 +21,28 @@ public class PassengerController {
     @Autowired
     private PassengerService passengerService;
 
+    /**
+     *
+     * @param id
+     * @param responseType
+     * @return
+     */
     @GetMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getPassenger(@PathVariable("id") String id, @RequestParam(value = "xml", required = false) Boolean responseType) {
 
         return passengerService.getPassenger(id, responseType);
     }
 
+    /**
+     *
+     * @param firstname
+     * @param lastname
+     * @param birthyear
+     * @param gender
+     * @param phone
+     * @param responseType
+     * @return
+     */
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> createPassenger(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname,
          @RequestParam("birthyear") Integer birthyear, @RequestParam("gender") String gender, @RequestParam("phone") String phone,
@@ -35,6 +51,17 @@ public class PassengerController {
         return passengerService.createPassenger(firstname, lastname, birthyear, gender, phone, responseType);
     }
 
+    /**
+     *
+     * @param id
+     * @param firstname
+     * @param lastname
+     * @param birthyear
+     * @param gender
+     * @param phone
+     * @param responseType
+     * @return
+     */
     @PutMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> updatePassenger(
             @PathVariable("id") String id,
@@ -47,6 +74,12 @@ public class PassengerController {
         return passengerService.updatePassenger(id,firstname,lastname,birthyear,gender,phone,responseType);
     }
 
+    /**
+     *
+     * @param id
+     * @param responseType
+     * @return
+     */
     @DeleteMapping(value = "/{id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> deletePassenger(
             @PathVariable("id") String id,

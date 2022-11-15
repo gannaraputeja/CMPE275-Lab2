@@ -22,12 +22,27 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    /**
+     *
+     * @param reservationNumber
+     * @param responseType
+     * @return
+     */
     @GetMapping(value = "/{reservationNumber}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getReservation(@PathVariable("reservationNumber") String reservationNumber,
              @RequestParam(value = "xml", required = false) Boolean responseType) {
         return reservationService.getReservation(reservationNumber, responseType);
     }
 
+    /**
+     *
+     * @param passengerId
+     * @param flightNumbers
+     * @param departureDates
+     * @param responseType
+     * @return
+     * @throws MyParseException
+     */
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> makeReservation(@RequestParam("passengerId") String passengerId,
           @RequestParam("flightNumbers") String flightNumbers,
@@ -36,6 +51,16 @@ public class ReservationController {
         return reservationService.makeReservation(passengerId, flightNumbers, departureDates, responseType);
     }
 
+    /**
+     *
+     * @param reservationNumber
+     * @param flightsAdded
+     * @param flightsRemoved
+     * @param departureDatesAdded
+     * @param departureDatesRemoved
+     * @param responseType
+     * @return
+     */
     @PostMapping(value = "/{number}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
     public ResponseEntity<Object> UpdateReservation(
         @PathVariable("number") String reservationNumber,

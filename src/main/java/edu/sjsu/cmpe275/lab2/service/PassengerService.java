@@ -128,7 +128,7 @@ public class PassengerService {
             return Util.prepareErrorResponse("404","Bad Request",HttpStatus.BAD_REQUEST,responseType);
         }
 
-        return Util.prepareResponse(Util.convertToDTO(passenger),HttpStatus.OK,responseType);
+        return Util.prepareResponse(new Success("200","Passenger with id " + id + " is deleted successfully"),HttpStatus.OK,responseType);
     }
 
     /**

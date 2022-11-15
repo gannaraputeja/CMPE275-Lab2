@@ -136,7 +136,7 @@ public class FlightService {
         }
         		
 		flightRepository.deleteByFlightNumberAndDepartureDate(flightNumber,departureDate);
-        return Util.prepareResponse(new Success("200","Deleted flight successfully"), HttpStatus.OK, responseType);
+        return Util.prepareResponse(new Success("200","Flight with number " + flightNumber + " is deleted successfully"), HttpStatus.OK, responseType);
     }
 
     /**

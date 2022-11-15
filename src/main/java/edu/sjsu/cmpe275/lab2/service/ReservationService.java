@@ -580,6 +580,6 @@ public class ReservationService {
 		
 		reservationRepository.delete(reservation.get());
         String msg = "Reservation with number "+reservationNumber +" is canceled successfully";
-		return Util.prepareResponse(new Success("200","msg"), HttpStatus.OK, responseType);
+		return Util.prepareResponse(new Success("200",msg), HttpStatus.OK, responseType);
 	}
 }

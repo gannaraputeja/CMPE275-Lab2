@@ -35,7 +35,7 @@ public class FlightService {
 
     public ResponseEntity<Object> createOrUpdateFlight(String flightNumber, Date departureDate, Integer price, String origin,
                                                        String destination, Date departureTime, Date arrivalTime, String description,
-                                                       Integer capacity, String model, String manufacturer, Integer yearOfManufacture) {
+                                                       Integer capacity, String model, String manufacturer, Integer yearOfManufacture, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
         Plane plane = new Plane(model, capacity, manufacturer, yearOfManufacture);
 
@@ -44,16 +44,16 @@ public class FlightService {
                 Flight newFlight = new Flight(flightNumber, departureDate, departureTime, arrivalTime, price,
                         origin, destination, capacity, description, plane, new ArrayList<>());
                 flightRepository.save(newFlight);
-                return Util.prepareResponse(Util.convertToDTO(newFlight), HttpStatus.OK, false);
+                return Util.prepareResponse(Util.convertToDTO(newFlight), HttpStatus.OK, responseType);
             } catch (Exception e) {
-                return Util.prepareErrorResponse("400", "New Flight creation failed", HttpStatus.BAD_REQUEST, false);
+                return Util.prepareErrorResponse("400", "New Flight creation failed", HttpStatus.BAD_REQUEST, responseType);
             }
         } else {
             try {
                 Integer totalBookings = flight.get().getPlane().getCapacity() - flight.get().getSeatsLeft();
                 if (totalBookings > capacity) {
                     return Util.prepareErrorResponse("400", "Flight Capacity cannot be lower than the number of active reservations",
-                            HttpStatus.BAD_REQUEST, false);
+                            HttpStatus.BAD_REQUEST, responseType);
                 } else {
                     flight.get().setSeatsLeft(capacity - totalBookings);
                 }
@@ -61,7 +61,7 @@ public class FlightService {
                 for (Passenger passenger : flight.get().getPassengers()) {
                     if (checkFlightTimeConflict(passenger, departureTime, arrivalTime)) {
                         return Util.prepareErrorResponse("400", "Updating flight departure and/or arrival time " +
-                                "causing one or more passengers to have overlapping flight time", HttpStatus.BAD_REQUEST, false);
+                                "causing one or more passengers to have overlapping flight time", HttpStatus.BAD_REQUEST, responseType);
                     }
                 }
 
@@ -75,10 +75,10 @@ public class FlightService {
                 flight.get().setDescription(description);
                 flight.get().setPlane(plane);
                 flightRepository.save(flight.get());
-                return Util.prepareResponse(Util.convertToDTO(flight.get()), HttpStatus.OK, false);
+                return Util.prepareResponse(Util.convertToDTO(flight.get()), HttpStatus.OK, responseType);
             } catch (Exception e) {
                 System.out.println(e.toString());
-                return Util.prepareErrorResponse("400", "Exception while updating the flight details", HttpStatus.BAD_REQUEST, false);
+                return Util.prepareErrorResponse("400", "Exception while updating the flight details", HttpStatus.BAD_REQUEST, responseType);
             }
         }
     }

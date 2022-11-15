@@ -7,6 +7,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 import javax.transaction.Transactional;
 
 /**
@@ -69,7 +71,7 @@ public class ReservationController {
         @RequestParam(value = "departureDatesAdded", required = false) String departureDatesAdded,
         @RequestParam(value = "departureDatesRemoved", required = false) String departureDatesRemoved,
         @RequestParam(value= "xml", required = false) Boolean responseType
-        ) {
+        ) throws ParseException {
             return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDatesAdded, departureDatesRemoved, responseType);
         }
 

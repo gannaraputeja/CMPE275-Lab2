@@ -40,7 +40,9 @@ public class Reservation {
     )
     @JsonIgnoreProperties({"passengers"})
     private List<Flight> flights;    // Full form only, CANNOT be empty, ordered chronologically by departureTime
-
+    public String getReservatioNumber() {
+        return this.reservationNumber;
+    }
     public Reservation(Passenger passenger, String origin, String destination, Integer price, List<Flight> flights) {
         this.passenger = passenger;
         this.origin = origin;

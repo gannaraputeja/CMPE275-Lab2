@@ -72,10 +72,11 @@ public class FlightController {
             @RequestParam("capacity") Integer capacity,
             @RequestParam("model") String model,
             @RequestParam("manufacturer") String manufacturer,
-            @RequestParam("yearOfManufacture") Integer yearOfManufacture){
+            @RequestParam("yearOfManufacture") Integer yearOfManufacture,
+            @RequestParam(value = "xml", required = false) Boolean responseType){
         System.out.println("Flight Number--> "+flightNumber);
         return flightService.createOrUpdateFlight(flightNumber,departureDate,price,origin,destination,
-                departureTime,arrivalTime,description,capacity,model,manufacturer,yearOfManufacture);
+                departureTime,arrivalTime,description,capacity,model,manufacturer,yearOfManufacture, responseType);
     }
 
     /**

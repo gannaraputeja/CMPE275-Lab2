@@ -4,6 +4,9 @@ import lombok.NoArgsConstructor;
 
 import java.text.ParseException;
 
+/**
+ * This is a Custom ParseException
+ */
 @NoArgsConstructor
 public class MyParseException extends RuntimeException {
 

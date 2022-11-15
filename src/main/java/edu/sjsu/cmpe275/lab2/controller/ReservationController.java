@@ -25,10 +25,11 @@ public class ReservationController {
     private ReservationService reservationService;
 
     /**
+     * Get a Reservation
      *
      * @param reservationNumber
      * @param responseType
-     * @return
+     * @return Reservation Detials
      */
     @GetMapping(value = "/{reservationNumber}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<Object> getReservation(@PathVariable("reservationNumber") String reservationNumber,
@@ -37,12 +38,13 @@ public class ReservationController {
     }
 
     /**
+     * Make a Reservation
      *
      * @param passengerId
      * @param flightNumbers
      * @param departureDates
      * @param responseType
-     * @return
+     * @return Reservation Details
      * @throws MyParseException
      */
     @PostMapping(value = "", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -54,6 +56,7 @@ public class ReservationController {
     }
 
     /**
+     * Update a Reservation
      *
      * @param reservationNumber
      * @param flightsAdded
@@ -61,7 +64,7 @@ public class ReservationController {
      * @param departureDatesAdded
      * @param departureDatesRemoved
      * @param responseType
-     * @return
+     * @return Reservation Details
      */
     @PostMapping(value = "/{number}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE} )
     public ResponseEntity<Object> UpdateReservation(
@@ -75,6 +78,13 @@ public class ReservationController {
             return reservationService.updateReservation(reservationNumber, flightsAdded, flightsRemoved, departureDatesAdded, departureDatesRemoved, responseType);
         }
 
+        /**
+         * Delete a Reservation
+         *
+         * @param reservationNumber
+         * @param responseType
+         * @return Success/Error Response
+         */
         @DeleteMapping(value = "/{number}",
         consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
         produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})

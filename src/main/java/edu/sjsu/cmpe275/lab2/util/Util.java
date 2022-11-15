@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 /**
- * This is Passenger Entity.
+ * This is Util class.
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
@@ -29,6 +29,14 @@ public class Util {
     private static final String dateFormat = "yy-MM-dd";
     private static final SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
 
+    /**
+     * Prepares a Response with given Response, HttpStatus
+     *
+     * @param response
+     * @param status
+     * @param responseType
+     * @return Response in responseType format
+     */
     public static ResponseEntity prepareResponse(Object response, HttpStatus status, Boolean responseType) {
         HttpHeaders responseHeaders = new HttpHeaders();
         if(responseType != null && responseType) {
@@ -39,6 +47,15 @@ public class Util {
         return new ResponseEntity(response, responseHeaders, status);
     }
 
+    /**
+     * Prepares Error Response with given Code, Message, HttpStatus
+     *
+     * @param code
+     * @param msg
+     * @param status
+     * @param responseType
+     * @return Response in responseType format
+     */
     public static ResponseEntity prepareErrorResponse(String code, String msg, HttpStatus status, Boolean responseType) {
         HttpHeaders responseHeaders = new HttpHeaders();
 
@@ -50,6 +67,13 @@ public class Util {
         return new ResponseEntity(buildError(code, msg), responseHeaders, status);
     }
 
+    /**
+     * Builds Error Response Object
+     *
+     * @param code
+     * @param msg
+     * @return
+     */
     private static HashMap<String, HashMap> buildError(String code, String msg) {
         HashMap<String, HashMap> json = new HashMap<>();
         HashMap<String, String> badRequest = new HashMap<>();
@@ -59,6 +83,12 @@ public class Util {
         return json;
     }
 
+    /**
+     * Converts Passenger Entity to PassengerDTO Simple Form
+     *
+     * @param passenger
+     * @return PassengerDTO
+     */
     public static PassengerDTO convertToDTOSimple(Passenger passenger) {
         PassengerDTO dto = new PassengerDTO();
         if(passenger != null) {
@@ -69,6 +99,12 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts Passenger Entity to PassengerDTO Full Form
+     *
+     * @param passenger
+     * @return PassengerDTO
+     */
     public static PassengerDTO convertToDTO(Passenger passenger) {
         PassengerDTO dto = new PassengerDTO();
         if(passenger != null) {
@@ -86,6 +122,12 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts Reservation Entity to ReservationDTO Simple Form
+     *
+     * @param reservation
+     * @return ReservationDTO
+     */
     public static ReservationDTO convertToDTOSimple(Reservation reservation) {
         ReservationDTO dto = new ReservationDTO();
         if(reservation != null) {
@@ -96,6 +138,12 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts Reservation Entity to ReservationDTO Full Form
+     *
+     * @param reservation
+     * @return ReservationDTO
+     */
     public static ReservationDTO convertToDTO(Reservation reservation) {
         ReservationDTO dto = new ReservationDTO();
         if(reservation != null) {
@@ -111,6 +159,12 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts Flight Entity to FlightDTO Simple Form
+     *
+     * @param flight
+     * @return FlightDTO
+     */
     public static FlightDTO convertToDTOSimple(Flight flight) {
         FlightDTO dto = new FlightDTO();
         if(flight != null) {
@@ -125,6 +179,12 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts Flight Entity to FlightDTO Full Form
+     *
+     * @param flight
+     * @return FlightDTO
+     */
     public static FlightDTO convertToDTO(Flight flight){
         FlightDTO dto = new FlightDTO();
         if(flight!=null){
@@ -151,6 +211,13 @@ public class Util {
         return dto;
     }
 
+    /**
+     * Converts String to Date object.
+     *
+     * @param dateString
+     * @return Date
+     * @throws ParseException
+     */
     public static Date convertStringToDate(String dateString) throws ParseException {
         return dateFormatter.parse(dateString);
     }

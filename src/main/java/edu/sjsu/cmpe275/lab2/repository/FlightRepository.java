@@ -17,23 +17,21 @@ import java.util.Optional;
 
 public interface FlightRepository extends JpaRepository<Flight, String> {
 
+    /**
+     * Finds Flight based on FlightNumber and DepartureDate
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @return Flight Entity
+     */
     public Optional<Flight> findByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
 
+    /**
+     * Deletes Flight based on FlightNumber and DepartureDate
+     *
+     * @param flightNumber
+     * @param departureDate
+     */
     public void deleteByFlightNumberAndDepartureDate(String flightNumber, Date departureDate);
 
-//    @Query("SELECT * FROM Flight where (flightNumber, departure_date) IN " +
-//            "   (SELECT flight_number,departure_date FROM Reservation_Flight WHERE reservation_number = ?1 )")
-//    public List<Flight> findBy(String reservationNumber);
-
 }
-
-//
-//select * from flight where (flight_number, departure_date) in
-//        (select flight_number, departure_date from Reservation_Flight where reservation_number = 'd531001d-cf0c-4245-99cb-268b366bf2d3')
-
-
-//@Query("SELECT u FROM User u WHERE u.status = ?1")
-//User findUserByStatus(Integer status);
-//
-//@Query("SELECT u FROM User u WHERE u.status = ?1 and u.name = ?2")
-//User findUserByStatusAndName(Integer status, String name);

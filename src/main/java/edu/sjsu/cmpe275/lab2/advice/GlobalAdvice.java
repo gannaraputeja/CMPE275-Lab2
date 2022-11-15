@@ -20,12 +20,26 @@ import java.text.ParseException;
 @ControllerAdvice
 public class GlobalAdvice extends ResponseEntityExceptionHandler {
 
+    /**
+     * Handles SQLIntegrityConstraintViolationException
+     *
+     * @param e
+     * @param request
+     * @return Error Response
+     */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(SQLIntegrityConstraintViolationException e, HttpServletRequest request) {
 
         return Util.prepareErrorResponse("400", e.getMessage(),  HttpStatus.BAD_REQUEST,Boolean.valueOf(request.getParameter("xml")));
     }
 
+    /**
+     * Handles ParseException
+     *
+     * @param e
+     * @param request
+     * @return Error Response
+     */
     @ExceptionHandler(MyParseException.class)
     public ResponseEntity<Object> handleParseException(ParseException e, HttpServletRequest request) {
         return Util.prepareErrorResponse("400", e.getMessage(), HttpStatus.BAD_REQUEST, Boolean.valueOf(request.getParameter("xml")));

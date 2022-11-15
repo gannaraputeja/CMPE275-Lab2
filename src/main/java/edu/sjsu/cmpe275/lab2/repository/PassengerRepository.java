@@ -10,5 +10,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PassengerRepository extends JpaRepository<Passenger, String> {
 
+    /**
+     * Finds Passenger based on Phone
+     *
+     * @param phone
+     * @return Passenger
+     */
     Passenger findByPhone(String phone);
 }

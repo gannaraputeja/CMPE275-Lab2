@@ -14,6 +14,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+/**
+ * This is Flight Service.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
+ */
+
 @Service
 public class FlightService {
 
@@ -23,6 +28,14 @@ public class FlightService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    /**
+     * Gets a Flight based on flightNumber, departureDate
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> getFlight(String flightNumber, Date departureDate, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
         if (!flight.isPresent()) {
@@ -33,6 +46,24 @@ public class FlightService {
         return Util.prepareResponse(Util.convertToDTO(flight.get()), HttpStatus.OK, responseType);
     }
 
+    /**
+     * Creates or Updates Flight based on flightNumber
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param price
+     * @param origin
+     * @param destination
+     * @param departureTime
+     * @param arrivalTime
+     * @param description
+     * @param capacity
+     * @param model
+     * @param manufacturer
+     * @param yearOfManufacture
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> createOrUpdateFlight(String flightNumber, Date departureDate, Integer price, String origin,
                                                        String destination, Date departureTime, Date arrivalTime, String description,
                                                        Integer capacity, String model, String manufacturer, Integer yearOfManufacture, Boolean responseType) {
@@ -83,6 +114,14 @@ public class FlightService {
         }
     }
 
+    /**
+     * Deletes a Flight based on flightNumber, departureDate
+     *
+     * @param flightNumber
+     * @param departureDate
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> deleteFlight(String flightNumber, Date departureDate, Boolean responseType) {
         Optional<Flight> flight = flightRepository.findByFlightNumberAndDepartureDate(flightNumber, departureDate);
         if (!flight.isPresent()) {
@@ -100,6 +139,14 @@ public class FlightService {
         return Util.prepareResponse(new Success("200","Deleted flight successfully"), HttpStatus.OK, responseType);
     }
 
+    /**
+     * Checks given Passenger has conflict with Flight based on Flights departureTime and arrivalTime
+     *
+     * @param passenger
+     * @param departureTime
+     * @param arrivalTime
+     * @return True/False
+     */
     private Boolean checkFlightTimeConflict(Passenger passenger, Date departureTime, Date arrivalTime) {
         List<Reservation> reservations = reservationRepository.findByPassenger(passenger);
 

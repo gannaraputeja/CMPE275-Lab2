@@ -1,5 +1,9 @@
 package edu.sjsu.cmpe275.lab2.service;
 
+/**
+ * This is Success Response.
+ * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
+ */
 public class Success {
 
     String code;

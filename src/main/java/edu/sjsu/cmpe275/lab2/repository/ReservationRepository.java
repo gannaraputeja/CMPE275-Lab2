@@ -13,7 +13,13 @@ import java.util.List;
  */
 
 public interface ReservationRepository extends JpaRepository<Reservation, String> {
+
+    /**
+     * Finds Reservation based on Passenger
+     *
+     * @param passenger
+     * @return Reservation Entity
+     */
     List<Reservation> findByPassenger(Passenger passenger);
 
-    /*List<Flight> findFlightsByReservationNumber(String reservationNumber);*/
 }

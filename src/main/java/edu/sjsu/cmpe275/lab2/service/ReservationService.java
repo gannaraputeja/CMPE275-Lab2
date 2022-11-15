@@ -21,7 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * This is Passenger Entity.
+ * This is Reservation Service.
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
@@ -36,6 +36,13 @@ public class ReservationService {
     @Autowired
     private FlightRepository flightRepository;
 
+	/**
+	 * Get a Reservation based on ReservationNumber
+	 *
+	 * @param reservationNumber
+	 * @param responseType
+	 * @return Response in responseType format
+	 */
     public ResponseEntity<Object> getReservation(String reservationNumber, Boolean responseType) {
 
         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);
@@ -47,6 +54,16 @@ public class ReservationService {
         }
     }
 
+	/**
+	 * Make a Reservation with given Reservation details.
+	 *
+	 * @param passengerId
+	 * @param flightNumbers
+	 * @param departureDates
+	 * @param responseType
+	 * @return Response in responseType format
+	 * @throws MyParseException
+	 */
     public ResponseEntity<Object> makeReservation(String passengerId, String flightNumbers, String departureDates, Boolean responseType) throws MyParseException {
         Optional<Passenger> passenger = passengerRepository.findById(passengerId);
         if(!passenger.isPresent()) {
@@ -108,6 +125,12 @@ public class ReservationService {
 
     }
 
+	/**
+	 * Checks if given Flights has conflicts based on its departureTime and arrivalTime
+	 *
+	 * @param flights
+	 * @return True/False
+	 */
     public Boolean hasOverlapConflict(List<Flight> flights) {
         for(int i=0; i<flights.size()-1; i++) {
             Flight f1 = flights.get(i);
@@ -118,6 +141,15 @@ public class ReservationService {
         return false;
     }
 
+	/**
+	 * Checks for overlap of given dates.
+	 *
+	 * @param dt1
+	 * @param at1
+	 * @param dt2
+	 * @param at2
+	 * @return True/False
+	 */
     public Boolean validateOverlap(Date dt1, Date at1, Date dt2, Date at2) {
         if(dt1.compareTo(dt2) == 0 || at1.compareTo(at2) == 0 || dt1.compareTo(at2) == 0 || at1.compareTo(dt2) == 0) {
             return true;
@@ -127,6 +159,13 @@ public class ReservationService {
         return false;
     }
 
+	/**
+	 * Check if Passenger has conflict with existing Reservations
+	 *
+	 * @param passenger
+	 * @param flights
+	 * @return True/False
+	 */
     public Boolean hasOverlapReservation(Passenger passenger, List<Flight> flights) {
         if(passenger.getReservations().size() < 1) {
             return false;
@@ -148,10 +187,22 @@ public class ReservationService {
         }
     }
 
+	/**
+	 * Checks if given Flights has seatsLeft.
+	 *
+	 * @param flights
+	 * @return True/False
+	 */
     public Boolean hasSeatsLeft(List<Flight> flights) {
         return flights.stream().allMatch(flight -> flight.getSeatsLeft() > 0 && flight.getSeatsLeft() <= flight.getPlane().getCapacity());
     }
 
+	/**
+	 * Converts String to Date object.
+	 *
+	 * @param departureDatesStringList
+	 * @return
+	 */
     public List<Date> convertStingDatesToDate(List<String> departureDatesStringList){
         List<Date> departureDatesList = departureDatesStringList.stream().map(d -> {
             try {
@@ -163,11 +214,26 @@ public class ReservationService {
         return departureDatesList;
     }
 
+	/**
+	 * Checks if given dates have intersection/overlap.
+	 *
+	 * @param dt1
+	 * @param at1
+	 * @param dt2
+	 * @param at2
+	 * @return True/False
+	 */
     public Boolean checkIntersection(Date dt1, Date at1, Date dt2, Date at2) 
 	{
 	    return !dt1.after(at2) && !dt2.after(at1);
     }
 
+	/**
+	 * Checks given flights has overlap conflict.
+	 *
+	 * @param flightList
+	 * @return True/False
+	 */
 	private boolean checkConflict(List<Flight> flightList) 
 	{
 		if(flightList.size()==1)
@@ -195,6 +261,14 @@ public class ReservationService {
         return false;
 	}
 
+	/**
+	 * Checks if Passenger has Reservation conflict and given Flights.
+	 *
+	 * @param passenger
+	 * @param flightList
+	 * @param reservationNumber
+	 * @return
+	 */
 	private boolean checkReservationConflict(Passenger passenger, List<Flight> flightList, String reservationNumber) 
 	{
 		if(passenger.getReservations().size() < 1) 
@@ -227,6 +301,18 @@ public class ReservationService {
 		
 	}
 
+	/**
+	 * Updates a Reservation based on given Reservation params.
+	 *
+	 * @param reservationNumber
+	 * @param flightsAdded
+	 * @param flightsRemoved
+	 * @param departureDatesAdded
+	 * @param departureDatesRemoved
+	 * @param responseType
+	 * @return Response in responseType format
+	 * @throws ParseException
+	 */
 	public ResponseEntity<Object> updateReservation(String reservationNumber, String flightsAdded, String flightsRemoved, String departureDatesAdded, String departureDatesRemoved, boolean responseType) throws ParseException 
 	{
 		Optional<Reservation> reservationObj = reservationRepository.findById(reservationNumber);
@@ -471,7 +557,14 @@ public class ReservationService {
     //     return Util.prepareResponse(Util.convertToDTO(reservationObj), HttpStatus.OK, responseType);
     // }
 
-    
+
+	/**
+	 * Deletes a Reservation based on reservationNumber
+	 *
+ 	 * @param reservationNumber
+	 * @param responseType
+	 * @return Success/Error Response in given responseType
+	 */
 	public ResponseEntity<Object> deleteReservationById(String reservationNumber, boolean responseType) 
 	{
         Optional<Reservation> reservation = reservationRepository.findById(reservationNumber);

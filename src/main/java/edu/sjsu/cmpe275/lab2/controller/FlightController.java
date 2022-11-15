@@ -25,11 +25,12 @@ public class FlightController {
     private FlightService flightService;
 
     /**
+     * Get a Flight
      *
      * @param flightNumber
      * @param departureDate
      * @param responseType
-     * @return
+     * @return Flight Details
      */
     @GetMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
@@ -42,6 +43,7 @@ public class FlightController {
     }
 
     /**
+     * Create or Update a Flight
      *
      * @param flightNumber
      * @param departureDate
@@ -55,7 +57,7 @@ public class FlightController {
      * @param model
      * @param manufacturer
      * @param yearOfManufacture
-     * @return
+     * @return Flight Details
      */
     @PostMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
@@ -80,11 +82,12 @@ public class FlightController {
     }
 
     /**
+     * Delete a Flight
      *
      * @param flightNumber
      * @param departureDate
      * @param responseType
-     * @return
+     * @return Success/Error Response
      */
     @DeleteMapping(value = "/{flightNumber}/{departureDate}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},

@@ -18,7 +18,7 @@ import java.util.Objects;
 
 
 /**
- * This is Passenger Entity.
+ * This is Passenger Service.
  * @author Raviteja Gannarapu, Sarat Kumar Kaniti, Ramya Kotha, Sai Charan Peda
  */
 
@@ -31,6 +31,13 @@ public class PassengerService {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    /**
+     * Gets a Passenger based on PassengerId.
+     *
+     * @param id
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> getPassenger(String id, Boolean responseType) {
         ResponseEntity<Object> responseEntity;
         Optional<Passenger> passenger = passengerRepository.findById(id);
@@ -43,6 +50,17 @@ public class PassengerService {
         return responseEntity;
     }
 
+    /**
+     * Creates a Passenger based on given Passenger details.
+     *
+     * @param firstname
+     * @param lastname
+     * @param birthyear
+     * @param gender
+     * @param phone
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> createPassenger(String firstname, String lastname, Integer birthyear, String gender, String phone, Boolean responseType) {
         Passenger passenger = new Passenger(firstname, lastname, birthyear, gender, phone);
         passengerRepository.save(passenger);
@@ -50,6 +68,18 @@ public class PassengerService {
         return responseEntity;
     }
 
+    /**
+     * Updates a Passenger based on PassengerId with other Passenger details.
+     *
+     * @param id
+     * @param firstname
+     * @param lastname
+     * @param birthyear
+     * @param gender
+     * @param phone
+     * @param responseType
+     * @return Response in responseType format
+     */
     public ResponseEntity<Object> updatePassenger(String id, String firstname, String lastname, Integer birthyear, String gender, String phone, Boolean responseType){
         System.out.println("Updating Passenger");
         Passenger passenger = passengerRepository.findById(id).orElse(null);
@@ -101,6 +131,12 @@ public class PassengerService {
         return Util.prepareResponse(Util.convertToDTO(passenger),HttpStatus.OK,responseType);
     }
 
+    /**
+     * Deletes a given Reservation of given Passenger
+     *
+     * @param reservation
+     * @param passenger
+     */
     public void deleteReservation(Reservation reservation, Passenger passenger){
         for(Flight flight:reservation.getFlights()){
             updateFlightSeat(flight);
@@ -110,6 +146,10 @@ public class PassengerService {
         reservationRepository.delete(reservation);
     }
 
+    /**
+     * Updates Flights seatsLeft attribute.
+     * @param flight
+     */
     public void updateFlightSeat(Flight flight){
         int currSeats = flight.getSeatsLeft();
         flight.setSeatsLeft(currSeats+1);

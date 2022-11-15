@@ -131,7 +131,7 @@ public class FlightService {
 
         if(flight.get().getPassengers().size()>0)
 		{
-            return Util.prepareErrorResponse("404", "The Flight Number"+ flightNumber +" cannot be deleted since it has ome or more reservations",
+            return Util.prepareErrorResponse("404", "The Flight Number "+ flightNumber +" cannot be deleted since it has one or more reservations",
             HttpStatus.NOT_FOUND, responseType);        
         }
         		
